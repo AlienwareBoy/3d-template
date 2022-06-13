@@ -53,4 +53,19 @@ export class initEngine {
       resolve(rootEntity);
     });
   }
+  /**
+   *  创建场景之后，自动创建实体，基于实体基础上 加入各类组件进行操作
+   * */
+  createCamera(cameraName = "camera", config: { [data: string]: string }) {
+    if (!this.Entiry) {
+      new Error("先创建实体");
+      return;
+    }
+    const camera = this.Entiry?.createChild(cameraName) as Entity;
+    type key = keyof Camera;
+    for (let item in config) {
+      camera[item] = config[item];
+    }
+    this.Entiry?.addComponent(Camera);
+  }
 }
